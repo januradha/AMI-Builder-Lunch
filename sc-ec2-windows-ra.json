@@ -16,7 +16,7 @@
             "ParameterLabels": {
                 "VPC": {
                     "default": "VPC"
-                }
+                },
             }
         }
     },
@@ -76,24 +76,10 @@
                     {
                         "Description":"allow RDP",                        
                         "IpProtocol": "tcp",
-                        "FromPort": {
-                            "Ref": "WindowsRDPPort"
-                        },
-                        "ToPort": {
-                            "Ref": "WindowsRDPPort"
-                        },
-                        "CidrIp": {
-                            "Ref": "RemoteAccessCIDR"
-                        }
                     },
                     {
                         "Description":"allow icmp",
                         "IpProtocol": "icmp",
-                        "FromPort": "-1",
-                        "ToPort": "-1",
-                        "CidrIp": {
-                            "Ref": "RemoteAccessCIDR"
-                        }
                     }
                 ],
                 "SecurityGroupEgress":[
@@ -108,21 +94,11 @@
         "WindowsInstance": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
-                "ImageId": {"Ref": "LatestAmiId"},
-                "InstanceType": {
-                    "Ref": "WindowsInstanceType"
-                },
-                "SubnetId": {
-                    "Ref": "WindowsSubnet"
-                },
                 "SecurityGroupIds": [
                     {
                         "Ref": "WindowsSecurityGroup"
                     }
                 ],
-                "KeyName": {
-                    "Ref": "KeyPair"
-                },
                 "IamInstanceProfile": {
                     "Ref": "PatchingInstanceProfile"
                 },
@@ -359,11 +335,6 @@
         "WindowsInstanceId": {
             "Value": {
                 "Ref": "WindowsInstance"
-            }
-        },
-        "RemoteAccessCIDR": {
-            "Value": {
-                "Ref": "RemoteAccessCIDR"
             }
         },
         "VPC": {
